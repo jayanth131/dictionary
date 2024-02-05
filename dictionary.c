@@ -1,51 +1,51 @@
 #include <stdio.h>
 #include <string.h>
 #define FILE_NAME "dict.txt"
-#define SOURCE_LENGTH 100
-#define WORD_LENGTH 50
-#define URL_LENGTH 500
+#define SOURCE_LENGTH 150
+#define WORD_LENGTH 40
+#define URL_LENGTH 300
 
 void main()
 {
 	char MusicSource[SOURCE_LENGTH];
-	char word[WORD_LENGTH];
+	char given_word[WORD_LENGTH];
 
 	printf("Enter a word: ");
-	scanf("%s", word);
+	scanf("%s", given_word);
 
 	char url[URL_LENGTH];
-	sprintf(url, "%s%s%s%s", "curl \"https://api.dictionaryapi.dev/api/v2/entries/en/", word,"\">", FILE_NAME);
+	sprintf(url, "%s%s%s%s", "curl \"https://api.dictionaryapi.dev/api/v2/entries/en/", given_word,"\">", FILE_NAME);
 	printf("%s", url);
 
 	system(url);
 
-	FILE *Fpdict = fopen("dict.txt", "r");
-	fseek(Fpdict, 0, SEEK_END);
-	int size = ftell(Fpdict);
+	FILE *Fp_dict = fopen("dict.txt", "r");
+	fseek(Fp_dict, 0, SEEK_END);
+	int size = ftell(Fp_dict);
 
-	rewind(Fpdict);
+	rewind(Fp_dict);
 
 	char link[size];
-	fread(link, size, 1, Fpdict);
-	fclose(Fpdict);
+	fread(link, size, 1, Fp_dict);
+	fclose(Fp_dict);
 
 	char *ToDivid = ":";
 
-	char *token = strtok(link, ToDivid);
+	char *tokenizer = strtok(link, ToDivid);
 
 	char *ToCheck = "\"https";
 
 	int inIf = 0;
 
 
-	while(token != NULL)
+	while(tokenizer != NULL)
 	{
 		if ( !strcmp( ToCheck, token))
 		{
 			if ( !strcmp(ToCheck, "\"https"))
 				ToDivid = ",";
 
-			token = strtok(NULL, ToDivid);
+			tokenizer = strtok(NULL, ToDivid);
 
 
 			if ( inIf == 0)
@@ -56,7 +56,7 @@ void main()
 
 			else
 			{
-				token = strtok(NULL, "\"");
+				tokenizer = strtok(NULL, "\"");
 				if (inIf == 1)
 				{	
 					printf("\ndefinition: ");
@@ -67,7 +67,7 @@ void main()
 					printf("\nexample: ");
 				}
 
-				printf("%s\n", token);
+				printf("%s\n", tokenizer);
 
 			}
 
@@ -80,10 +80,10 @@ void main()
 		}
 		else
 		{
-			token = strtok(NULL, ToDivid);
+			tokenizer = strtok(NULL, ToDivid);
 		}
 	}
-	printf("\nIf you want to listen pronunciation for '%s'. \nEnter 1 else enter any number expect 1: ", word);
+	printf("\nIf you want to listen pronunciation for '%s'. \nEnter 1 else enter any number expect 1: ", given_word);
 
 	int choice;
 	scanf("%d", &choice);
