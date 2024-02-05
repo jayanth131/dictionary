@@ -7,7 +7,7 @@
 
 void main()
 {
-	char MusicSource[SOURCE_LENGTH];
+	char Music_Source[SOURCE_LENGTH];
 	char given_word[WORD_LENGTH];
 
 	printf("Enter a word: ");
@@ -50,7 +50,7 @@ void main()
 
 			if ( inIf == 0)
 			{
-				sprintf(MusicSource, " \"vlc.exe https:%s", token);
+				sprintf(Music_Source, " \"vlc.exe https:%s", tokenizer);
 				ToCheck = "definition";
 			}
 
@@ -74,7 +74,7 @@ void main()
 			ToDivid = "\"";
 			if (inIf == 2)
 			{
-				token = NULL;
+				tokenizer = NULL;
 			}
 			inIf++;
 		}
@@ -89,5 +89,5 @@ void main()
 	scanf("%d", &choice);
 
 	if ( choice == 1)
-		system(MusicSource);	
+		system(Music_Source);	
 }
